@@ -8,34 +8,32 @@ Welcome to the code repository for the Booster workshop on WebAssembly Component
 
 To complete the tasks, you need various tooling. We have prepared installation scripts for the tooling so you don't have to download all the tooling manually.
 
-* **MacOS**: Run `./install-tooling-macos.sh`. Requires [Homebrew](https://brew.sh/).
-* **Linux**: Run `./install-tooling-linux.sh`.
-* **Windows**: Run `./install-tooling-win.bat`.
+* **MacOS**: Run `./scripts/install-tooling-macos.sh`. Requires [Homebrew](https://brew.sh/).
+* **Linux**: Run `./scripts/install-tooling-linux.sh`. Assumes that Python 3 is already installed and is the default Python implementation.
+* **Windows**: Run `.\scripts\install-tooling-win.bat`.
 
 ### Rust
 
-* **The Rust compiler**: 
-* **The WebAssembly toolchain**:
-* **cargo component**:
+* **[The Rust compiler]()**: The Rust compiler is needed to compile Rust. Duh!
+* **[The WebAssembly toolchain]()**: To compile Rust to WebAssembly, you need to install compile targets for WebAssembly. The following targets need to be installed: `wasm32-unknown-unknown` and `wasm32-wasi`.
+* **[cargo component]()**: This tool allows you to convert Rust WebAssembly modules to components.
 
 ### Python
 
-* **Python 3**:
-* **componentize-py**:
+* **[Python 3](https://www.python.org/)**: If you want to build WebAssembly components using Python, you'll need the Python interpreter and `pip`, the Python package manager.
+* **[componentize-py](https://github.com/bytecodealliance/componentize-py)**: This tool converts Python code into WebAssembly components by embedding the Python runtime within a WebAssembly module.
 
 ### Runtime
 
-* **Wasmtime**: 
+* **[Wasmtime](https://wasmtime.dev/)**: This is the most established WebAssembly runtime for use outside the browser. 
 
 ### Tooling
 
-* **WASI Virt**: 
+* **[WASI Virt](https://github.com/bytecodealliance/WASI-Virt)**: This tool lets you virtualize the system interface for a WebAssembly component.
 
 ### Deployment
 
-* **Fermyon Spin**: 
-
-
+* **[Fermyon Spin](https://www.fermyon.com/spin)**: Fermyon is one of multiple vendors that handle hosting and running WebAssembly components. The `spin` tool allows building and deploying your components as serverless functions in the Fermyon platform.
 
 ## The tasks
 

@@ -5,5 +5,4 @@ cargo install cargo-component
 cargo install wasmtime-cli
 cargo install --git https://github.com/bytecodealliance/wasi-virt
 
-brew install python3
-pip3 install componentize-py
+pip install componentize-py
