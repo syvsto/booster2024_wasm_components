@@ -7,6 +7,9 @@ cargo install wasmtime-cli
 cargo install wasm-pack
 cargo install --git https://github.com/bytecodealliance/wasi-virt
 
+brew install node
+npm install -g @bytecodealliance/componentize-js
+
 brew install python3
 pip3 install componentize-py
 
