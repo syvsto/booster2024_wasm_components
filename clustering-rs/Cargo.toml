@@ -13,3 +13,5 @@ linfa = "0.7.0"
 linfa-clustering = "0.7.0"
 ndarray = "0.15.6"
 wit-bindgen = "0.17.0"
+wasm-bindgen = "0.2.91"
+getrandom = { version = "0.2", features = ["js"] }
