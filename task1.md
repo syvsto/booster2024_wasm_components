@@ -62,4 +62,23 @@ wasmtime -S common greeter.wasm
 If you've done everything right, your terminal should say "Hello from Python!".
 
 
-## Greeter using Javascript (or Typescript)
+## 01.2 Greeter using Javascript
+
+Next, we build the same component using Javascript.
+
+### 01.2.1 Setup
+
+To compile Javascript to WebAssembly, we use the `componentize-js` package. It differs from `componentize-py` by being a library instead of a CLI application, and therefore needs to be installed into the project where it is used.
+
+1. Install `componentize-js` using `npm install @bytecodealliance/componentize-js`.
+
+Using `componentize-js` requires making a build script. We've provided one in `build.mjs`.
+
+### 01.2.2 The contract
+
+Next up, we need an interface for our component. The Javascript component is going to do the same thing as the Python component.
+
+1. Write the `greeter.wit` file required for the Javascript component.
+
+
+TODO: Wait for proper WASI support in componentize-js
