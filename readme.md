@@ -10,7 +10,7 @@ To complete the tasks, you need various tooling. We have prepared installation s
 
 * **MacOS**: Run `./scripts/install-tooling-macos.sh`. Requires [Homebrew](https://brew.sh/).
 * **Linux**: Run `./scripts/install-tooling-linux.sh`. Assumes that Node 18 (or later) and Python 3 is already installed and is the default Python implementation.
-* **Windows**: Run `.\scripts\install-tooling-win.bat`.
+* **Windows**: Run `.\scripts\install-tooling-win.bat` twice (restarting cmd to update path necessary). Assumes that Node 18 (or later) and Python 3 is already installed and is the default Python implementation.
 
 ### Rust
 
