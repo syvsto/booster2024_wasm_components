@@ -22,7 +22,7 @@ The `greeter.wit` file contains the imports and exports that allow this WebAssem
 
 Our end goal with `greeter` is to print a line of text to the screen, which means we need to interface with the world outside the WebAssembly runtime. For this, we can use the WebAssembly System Interface (WASI). WASI has built-in support for CLI applications through what is known as "command" components. A command component is a component which only exports the `wasi:cli/run` interface.
 
-3. Export the `wasi:cli/run` interface in `greeter.wit`.
+3. Export the `wasi:cli/run@0.2.0` interface in `greeter.wit`. 
 
 You should now have a completed contract for a component that can print to the terminal!
 
