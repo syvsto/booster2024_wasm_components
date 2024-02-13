@@ -9,26 +9,51 @@ In task 1, we developed a component named `greeter`, that displayed a greeting f
 
 1. Copy your Task 1 solutions into the folder named `/tasks/02`. 
 
+### 02.1.1 Updating the WIT
+
 In order to connect the inputs of one component to the outputs of another, we naturally need a way to specify the inputs of a component in our WIT files. You've already seen how to specify outputs, through the `export` keyword. The dual to `export` is `import`, which naturally specifies an input for the component.
 
-2. Change the `.wit` files of both the Python and the Javascript `greeter` versions so that you are able to compose arbitrary `greeter` components together. For now, don't worry about printing to the terminal (meaning you don't need the `export wasi:cli/run@0.2.0;` line anymore). You will need to specify a function, which is typed using `func(argument: argtype) -> returntype`. `argtype` and `returntype` can be any supported type in WIT, for instance `u8`, `f64` or `string`. 
+The convention when composing WebAssembly components is that the inputs and outputs that match between components should be specified using an `interface`, a WIT construct for specifying interfaces within a world. This was briefly discussed in Task 1, where we exported from the `wasi:cli/run` interface.
 
-The convention when composing WebAssembly components is that the inputs and outputs that match between components should be specified using an `interface`, a WIT construct for specifying interfaces within a world. This was briefly discussed in Task 1, we exported from the `wasi:cli/run` interface.
+1. Change the `.wit` files of both the Python and the Javascript `greeter` versions so that you are able to compose arbitrary `greeter` components together through the `greeter` interface. For now, don't worry about printing to the terminal (meaning you don't need the `export wasi:cli/run@0.2.0;` line anymore). The interface to use is already provided in the WIT file found in `tasks/02/start.wit`. 
 
-3. Change the `.wit` files again so that you don't import and export functions directly, but import and export an interface instead. Hint: Take a look at how the minimal WASI bindings in the `deps` folder to get an idea of how interfaces are written.
-
-# 02.1.1 Updating the implementations
+### 02.1.2 Updating the implementations
 
 The Python and Javascript source code also needs to be updated to match the changes to the WIT world.
 
 1. Update the Python source so that the new exported interface from is implementend, and so that the function within it returns string "Hello from Python!". 
-2. Update the function you just wrote so that it returns the import from the new interface to concatenate any previous input with the string " and Python!". The WIT should already be imported within the `app.py` file, so you only need to 
+2. Update the function you just wrote so that it returns the import from the new interface to concatenate any previous input with the string " and Python!". 
+
+To use imported WIT interfaces in Python, you use something akin to the following:
+
+```python
+from worldName import imports
+from worldName.import import interfaceName
+```
+
+This allows you to call the functions declared 
+
 3. Change the Javascript to do the same, but with the string " and Javascript!".
 
-We are now ready to compose! This can be done using the `wasm-tools` CLI application, but there is also a very handy online tool called the [WebAssembly Components Builder](https://wasmbuilder.app/) which lets you compose components using a node-based graphical editor:
+In Javascript, exported interfaces are implemented as an object in the following manner:
 
-1. Open the [WebAssembly Components Builder](https://wasmbuilder.app/) website and add the two `greeter` components.
-2. Drag and drop one instance of the Javascript `greeter` and two instances of the Python `greeter` components into the editor, and connect the exported interfaces. 
+```javascript
+export const interfaceName = {
+        fieldName: ...
+}
+```
+
+Imported interfaces are available through:
+
+```javascript
+import { interfaceName } from "packageName/worldName";
+```
+
+When everything is built, we are ready to compose! This can be done using the `wasm-tools` CLI application, but there is also a very handy online tool called the [WebAssembly Components Builder](https://wasmbuilder.app/) which lets you compose components using a node-based graphical editor:
+
+1. Open the [WebAssembly Components Builder](https://wasmbuilder.app/) website and add the two `greeter` components, as well as the `starter.wasm` component available in `tasks/02/starter.wasm`.
+2. Drag and drop one instance of each of the Javascript `greeter` and `starter` components, and two instances of the Python `greeter` components into the editor.
+3. Connect the exported interfaces. 
 
 This is (in theory) all that's needed to compose components. However, if you want to export the interface from any instance, you need to click the small checkbox in the top left corner of the checkbox. Since we only export an interface that returns a string and haven't yet added the `wasi:cli/run` interface back, we need to select the final component in the chain as the exported outputs in our composed component.
 
