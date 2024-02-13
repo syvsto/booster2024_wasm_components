@@ -16,7 +16,8 @@ To complete the tasks, you need various tooling. We have prepared installation s
 
 * **[The Rust compiler](https://rustup.rs/)**: The Rust compiler is needed to compile Rust. Duh!
 * **[The WebAssembly toolchain](https://rustup.rs/)**: To compile Rust to WebAssembly, you need to install compile targets for WebAssembly. The following targets need to be installed: `wasm32-unknown-unknown` and `wasm32-wasi`.
-* **[cargo component](https://github.com/bytecodealliance/cargo-component)**: This tool allows you to convert Rust WebAssembly modules to components.
+* **[cargo component](https://github.com/bytecodealliance/cargo-component)**: This tool allows you to compile Rust to WebAssembly components.
+* **[wasm-pack](https://rustwasm.github.io/wasm-pack/installer/)**: This tool allows you to compile Rust to WebAssembly modules that can be used in the browser, and generates bindings to Javascript.
 
 ### Typescript / Javascript
 
