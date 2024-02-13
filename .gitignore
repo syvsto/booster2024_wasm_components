@@ -1,0 +1,5 @@
+tasks/03/clustering-rs/debug/
+tasks/03/clustering-rs/target/
+tasks/03/clustering-rs/Cargo.lock
+tasks/03/clustering-rs/**/*.rs.bk
+tasks/03/clustering-rs/*.pdb

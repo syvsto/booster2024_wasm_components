@@ -1,0 +1,11 @@
+spin_manifest_version = 2
+
+[application]
+description = "A Booster 2024 clustering application"
+name = "booster-2024-clustering"
+version = "1.0.0"
+
+[[trigger.http]]
+# Insert a `route` and `component` field here
+
+# Create a `[component.<name>]` section here for your component
