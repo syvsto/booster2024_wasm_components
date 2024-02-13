@@ -80,5 +80,8 @@ Next up, we need an interface for our component. The Javascript component is goi
 
 1. Write the `greeter.wit` file required for the Javascript component.
 
+We can now write the required implementation. The convention in Javascript is that any WIT exports are implemented as an `export function`, with the name of the function to export.
+
+2. Write the necessary Javascript within the `app.js` file.
 
 TODO: Wait for proper WASI support in componentize-js

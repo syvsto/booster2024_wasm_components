@@ -1,5 +1,0 @@
-package booster:workshop;
-
-world clustering {
-    export categorize: func(points: list<list<f64>>, nclusters: u8) -> list<u8>;
-}
