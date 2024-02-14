@@ -55,21 +55,30 @@ When everything is built, we are ready to compose! This can be done using the `w
 2. Drag and drop one instance of each of the Javascript `greeter` and `starter` components, and two instances of the Python `greeter` components into the editor.
 3. Connect the exported interfaces. 
 
-This is (in theory) all that's needed to compose components. However, if you want to export the interface from any instance, you need to click the small checkbox in the top left corner of the checkbox. Since we only export an interface that returns a string and haven't yet added the `wasi:cli/run` interface back, we need to select the final component in the chain as the exported outputs in our composed component.
+This is all that's needed to compose components. However, if you want to export the interface from our composed component, you need to click the small checkbox in the top left corner of the checkbox. We want to use the exported greeting function in further compositions, so we need to select the final component in the chain as the exported outputs in our composed component.
+
+4. Select the final component as our exported interface and download the component.
 
 ## 02.2 Virtualization
 
-You may have noticed that the editor in the WebAssembly Components Builder shows a bunch of WASI imports. In fact, if you try to Download Component now, you will get an error about a mismatch between multiple instances of a `wasi` import. Both `componentize-py` and other WebAssembly component compilers such as Rust's `cargo component` (which we'll use in the next task) automatically add these imports so you are able to run the component within a runtime such as Wasmtime and use the WASI interface. However, it's not helpful for component composition. To alleviate this problem, we can virtualize these dependencies using [WASI-virt](https://github.com/bytecodealliance/WASI-Virt). 
+We still need a way to display the greeting. In task 1, we discussed command components:
 
-1. Virtualize the `greeter` components using `wasi-virt greeter.wasm -o greeter-virtualized.wasm`.
-2. Re-upload the virtualized components to [WebAssembly Components Builder](https://wasmbuilder.app/) and connect them like before (you can clear the previous uploads by refreshing). You should now be able to download the component.
+1. Write a new command component that can read the output of your composed component and print it to the screen. You can copy the `deps/` folder from one of the existing `greeter` components to get access to the required WASI modules.
+2. Add your composite component from before and the new command component to the WebAssembly Components Builder. If you want to clear the previous components, just refresh the page. 
+
+You may have noticed that the editor in the WebAssembly Components Builder shows a bunch of WASI imports for both the composite component and the command component. Both `componentize-py` and other WebAssembly component compilers such as Rust's `cargo component` (which we'll use in the next task) automatically add WASI imports so you are able to use the entire WASI interface when building the component. However, when composing components this automatic insertion of the WASI dependencies becomes a problem. In fact, if you try to Download Component now, you will get an error akin to this:
+
+```
+cannot import instance with name `wasi:io/error@0.2.0` for an instantiation argument of component `composite` because it conflicts with an imported instantiation argument of component `command-py`.
+```
+
+To alleviate this problem of conflicting imports, we can virtualize the WASI imports using [WASI-virt](https://github.com/bytecodealliance/WASI-Virt). We can't virtualize the command component as we want to access the runtime in order to print to the terminal there, but the composite component just returns a string, so we should be fine virtualizing almost everything there.
+
+2. Virtualize the WASI imports of the composite component using `wasi-virt composite-component.wasm -o composite-component-virt.wasm --allow-env --allow-random`. The two arguments `--allow-env` and `--allow-random` are required by the Python runtime within the component to allow Python to fetch environment information and the random number generator from the WebAssembly runtime.
+3. Re-upload the virtualized component to [WebAssembly Components Builder](https://wasmbuilder.app/) and connect it to the command component like before (you can clear the previous uploads by refreshing). You should now be able to download the component.
 
 ## 02.3 Finishing touches
 
-We now have a single binary built using both Python and Javascript that returns the string " and Python! and Javascript! and Python!". We are still missing two parts: The initial "Hello from WASM!" and a way to print to terminal. You have already used all the functionality needed to do the following:
+We now have a single binary built using both Python and Javascript that prints a nice greeting to the terminal. The only thing left to do is to try it out:
 
-1. Write a new component that takes no inputs and outputs the string "Hello from WASM!" in a way that's compatible with the previously composed component.
-2. Write a new command component that can read the output of your composed component and print it to the screen. You can copy the `deps/` folder from one of the existing `greeter` components to get access to the required WASI modules.
-3. Compose everything and run it using `wasmtime`.
-
-
+1. Run your composed component using `wasmtime`.
