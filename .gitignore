@@ -3,3 +3,5 @@ tasks/03/clustering-rs/target/
 tasks/03/clustering-rs/Cargo.lock
 tasks/03/clustering-rs/**/*.rs.bk
 tasks/03/clustering-rs/*.pdb
+tasks/03/handler/__pycache__/*
+.DS_Store

@@ -1,0 +1,10 @@
+package clustering:py;
+
+interface cluster {
+    run: func(points: list<list<f64>>, n-clusters: u32) -> list<u32>;
+}
+
+world clustering {
+    include wasi:http/proxy@0.2.0;
+    import cluster;
+}
