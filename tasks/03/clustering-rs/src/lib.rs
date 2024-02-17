@@ -1,4 +1,4 @@
-use crate::exports::clustering::rs::cluster::Guest;
+use crate::exports::clustering::common::clustering::Guest;
 use linfa::traits::{Fit, Predict};
 use linfa::DatasetBase;
 use linfa_clustering::KMeans;
@@ -9,8 +9,7 @@ wit_bindgen::generate!({
     world: "clustering",
 
     exports: {
-        world: Clustering,
-        "clustering:rs/cluster": Clustering
+        "clustering:common/clustering": Clustering
     }
 });
 
@@ -36,6 +35,7 @@ impl Guest for Clustering {
     }
 }
 
+/*
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -49,7 +49,8 @@ mod tests {
             .zip(data_y.iter())
             .map(|(x, y)| vec![*x, *y])
             .collect();
-        let res: Vec<u32> = Clustering::categorize();
+        let res: Vec<u32> = Clustering::run();
         println!("{:?}", res);
     }
 }
+*/

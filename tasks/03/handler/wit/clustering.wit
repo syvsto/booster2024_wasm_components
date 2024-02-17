@@ -6,5 +6,5 @@ interface cluster {
 
 world clustering {
     include wasi:http/proxy@0.2.0;
-    import cluster;
+    include clustering:common/imports;
 }

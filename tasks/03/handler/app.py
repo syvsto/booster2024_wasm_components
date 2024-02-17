@@ -12,7 +12,7 @@ import json
 
 from clustering import exports
 from clustering.types import Ok
-from clustering.imports import (types, cluster)
+from clustering.imports import (types, clustering)
 from clustering.imports.types import (
     MethodGet, MethodPost, Scheme, SchemeHttp, SchemeHttps, SchemeOther, IncomingRequest, ResponseOutparam,
     OutgoingResponse, Fields, OutgoingBody, OutgoingRequest
@@ -71,5 +71,5 @@ def run_cluster(data: bytes) -> str:
     json_data = json.loads(json_str)
     points = json_data['points']
     n_clusters = json_data['n_clusters']
-    clusters = cluster.run(points, n_clusters)
+    clusters = clustering.run(points, n_clusters)
     return clusters

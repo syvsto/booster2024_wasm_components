@@ -1,9 +1,5 @@
 package clustering:rs;
 
-interface cluster {
-    run: func(points: list<list<f64>>, n-clusters: u32) -> list<u32>;
-}
-
 world clustering {
-  export cluster;
+  include clustering:common/exports;
 }

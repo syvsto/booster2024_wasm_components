@@ -1,0 +1,13 @@
+package clustering:common;
+
+interface clustering {
+    run: func(points: list<list<f64>>, n-clusters: u32) -> list<u32>;
+}
+
+world exports {
+    export clustering;
+}
+
+world imports {
+    import clustering;
+}
