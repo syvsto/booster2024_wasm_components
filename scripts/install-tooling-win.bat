@@ -1,8 +1,3 @@
-winget search buildtools
-winget install Microsoft.VisualStudio.2022.Community --silent --override "--wait --quiet --add ProductLang En-us --add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended"
-winget search rustlang
-winget install Rustlang.Rustup
-
 rustup override set nightly
 cargo install cargo-component
 cargo install wasmtime-cli
