@@ -1,0 +1,79 @@
+main {
+    font-family: "sans-serif";
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.space-y-4 > * + * {
+    margin-top: 1.25rem;
+}
+
+.space-x-4 > * + * {
+    margin-left: 1.25rem;
+}
+
+.btn {
+    padding-left: 1.0rem;
+    padding-right: 1.0rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: #e3e4e6;
+    border: none;
+    border-radius: 0.5rem;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background-color: #d4d5d7;
+}
+.btn:active {
+    background-color: #c5c6c8;
+}
+
+.montserrat-100 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+}
+.montserrat-200 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
+.montserrat-300 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+.montserrat-400 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.montserrat-500 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.montserrat-600 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+.montserrat-700 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}

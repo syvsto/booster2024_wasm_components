@@ -6,6 +6,11 @@ name = "booster-2024-clustering"
 version = "1.0.0"
 
 [[trigger.http]]
-# Insert a `route` and `component` field here
+route = "/cluster"
+component = "cluster"
+
+[component.cluster]
+source = "./composed-http.wasm"
+description = "A simple clustering component"
 
 # Create a `[component.<name>]` section here for your component
