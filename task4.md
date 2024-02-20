@@ -27,15 +27,25 @@ If you visit [cloud.fermyon.com](https://cloud.fermyon.com) you should now see y
 
 *Note*: Fermyon and Spin has a lot of very interesting features such as support for key-value stores and databases, monitoring of specific components within a project, and support for a CMS for your applications. Take a look at [developer.fermyon.com](https://developer.fermyon.com) for more information!
 
+## 04.1.1 Running the algorithm
+
+In the `tasks/04/client/` directory we have a frontend NPM project that generates between 100 and 150 random points, clusters them, and plots the results in a scatter plot. 
+
+The frontend calls `/cluster` when the `New data` button is pressed, which is an endpoint that should return cluster data. 
+
+1. In order to resolve requests when running locally, we need to update our proxy settings in `vite.config.js`, so that we can redirect calls to `/cluster` to our Fermyon endpoint. Update the configuration so that the `/cluster` endpoint redirects.
+
+You should now be able to start the server using `npm install` followed by `npm run dev`. Open the browser, navigate to `localhost:5173`, and press the `New data` button. The plot should display data in a manner that seems clustered!
+
 ## 04.2 In the browser
 
-The clustering algorithm we built in task 3 seems like it could be useful in certain websites as well, for instance if you're building a dashboard. Since we're working with WebAssembly, that is not a problem! However, browsers need to support the interface between WebAssembly and the Javascript ABI. Hopefully, Browsers will begin to support the component specification in the future, so we can use WebAssembly components directly there as well, but for the time being we need to tweak our Rust clustering project slightly to support browsers.
+The clustering algorithm we built in task 3 seems like it could be useful in certain websites as well, for instance if you're building a dashboard with small amounts of frequently updating data. Since we're working with WebAssembly, that is not a problem! However, browsers need to support the interface between WebAssembly and the Javascript ABI. Hopefully, Browsers will begin to support the component specification in the future, so we can use WebAssembly components directly there as well, but for the time being we need to tweak our Rust clustering project slightly to support browsers.
 
 First, we need to add [wasm-bindgen](https://github.com/rustwasm/wasm-bindgen) to our project, which similarly to `wit-bindgen` provides helpers for creating bindings to the generated WebAssembly. This time, we don't create bindings to a WIT file, but instead to Javascript for the browser. Additionally, to conform to the Javascript ABI, we cannot specify functions using nested vectors, and instead need one or more flat lists.
 
-The simplest way to do so is to wrap our clustering method within a function that conforms to the Javascript ABI, and use this to build our WASM for the browser.
+The simplest way to do so is to refactor our clustering method into a standalone function that is conformant to the Javascript ABI and is callable by the `run` method. The new function can be used to build our WASM for the browser.
 
-1. Write such a function. This requires a little bit of Rust knowledge, but should be quite possible in a few lines of code. Hint: You cannot use nested vectors or other complex composite types, but are allowed to use anything that has a native Javascript type, such as `Uint8Array`, `Float64Array` and similar. Single vectors are therefore fine.
+1. Change the code to allow building for both the browser and server use cases. This requires a little bit of Rust knowledge, but should be quite possible in a few lines of code. Hint: You cannot use nested vectors or other complex composite types, but are allowed to use anything that has a native Javascript type, such as `Uint8Array`, `Float64Array` and similar. Single vectors are therefore fine.
 
 `wasm-bindgen` is quite straight-forward to use. You decorate any functions with a procedural macro in the following manner:
 
@@ -52,10 +62,26 @@ When the project is built, `wasm-bindgen` will now generate bindings to Javascri
 
 Finally, there is a separate build tool for building WebAssembly projects for the web in Rust: [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/).
 
-3. Run `wasm-pack build` to build the project for the browser. 
+3. Run `wasm-pack build --target web` to build the project for the browser. 
 
 The results are found within the `pkg/` folder in the project directory.
 
+## 04.2.1 Adding client-side WebAssembly to our frontend
+
+To increase the responsiveness of our application we want to change our frontend so that any time we generate less than 60 datapoints, we use the client-side WebAssembly clustering algorithm instead of passing the data to the Fermyon endpoint. Let's use our newly built WebAssembly package for this.
+
+First, we need to support loading WebAssembly modules in Vite, which is our build tool and development server. This can be done using [vite-plugin-wasm](https://www.npmjs.com/package/vite-plugin-wasm). 
+
+1. Install `vite-plugin-wasm` into the project using `npm i --save-dev vite-plugin-wasm`, and configure it following the setup instructions. 
+2. Next, since we haven't published our WebAssembly package, we need to link it into the project. Use `npm link ../../03/clustering-rs/pkg` to link the package as a dependency in our project.
+3. Again since we haven't publised our package, we need to manually update our dependencies. Edit `package.json` to add a field in `dependencies` called `clustering-rs` with the value `file:../../03/clustering-rs/pkg` or similar.
+
+We've now set everything up, and can start using our WebAssembly package on the client.
+
+4. Import the client-side clustering algorithm by editing the `script.js` file and adding `import { cluster as clusterWasm } from  "clustering-rs";` to the top of the file.
+4. Modify `script.js` so the `cluserClientside` function uses the imported `clusterWasm` file, and call this function instead of `clusterServerside` if there are fewer than 60 generated datapoints.
+
+The result should be the same as before, but with snappier clustering if the number of datapoints are fewer than 60.
 
 ## 04.3 What's next?
 
