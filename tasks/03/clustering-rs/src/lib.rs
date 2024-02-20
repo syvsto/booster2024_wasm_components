@@ -17,18 +17,6 @@ wit_bindgen::generate!({
 struct Clustering;
 impl Guest for Clustering {
     fn run(points: Vec<Vec<f64>>, n_clusters: u32) -> Vec<u32> {
-        cluster_core(points, n_clusters)
-    }
-}
-
-#[wasm_bindgen]
-pub fn cluster(points_x: Vec<f64>, points_y: Vec<f64>, n_clusters: u32) -> Vec<u32> {
-    let points: Vec<Vec<f64>> = points_x.iter().zip(points_y.iter()).map(|(x, y)| vec![*x, *y]).collect();
-    cluster_core(points, n_clusters)
-}
-
-
-fn cluster_core(points: Vec<Vec<f64>>, n_clusters: u32) -> Vec<u32> {
         let array2: Vec<[f64; 2]> = points
             .iter()
             .map(|p| [p[0].clone(), p[1].clone()])
@@ -45,4 +33,5 @@ fn cluster_core(points: Vec<Vec<f64>>, n_clusters: u32) -> Vec<u32> {
         let result: Vec<u32> = labels.iter().map(|label| label.clone() as u32).collect();
 
         result
+    }
 }

@@ -6,11 +6,6 @@ name = "booster-2024-clustering"
 version = "1.0.0"
 
 [[trigger.http]]
-route = "/cluster"
-component = "cluster"
-
-[component.cluster]
-source = "./composed-http.wasm"
-description = "A simple clustering component"
+# Setup the HTTP trigger to run on the `/cluster` endpoint
 
 # Create a `[component.<name>]` section here for your component

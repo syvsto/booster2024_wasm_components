@@ -12,7 +12,7 @@ import json
 
 from clustering import exports
 from clustering.types import Ok
-from clustering.imports import (types, clustering)
+from clustering.imports import types
 from clustering.imports.types import (
     MethodGet, MethodPost, Scheme, SchemeHttp, SchemeHttps, SchemeOther, IncomingRequest, ResponseOutparam,
     OutgoingResponse, Fields, OutgoingBody, OutgoingRequest
@@ -69,7 +69,7 @@ async def handle_async(request: IncomingRequest, response_out: ResponseOutparam)
 def run_cluster(data: bytes) -> str:
     json_str = data.decode('utf-8')
     json_data = json.loads(json_str)
-    points = json_data['points']
-    n_clusters = json_data['n_clusters']
-    clusters = clustering.run(points, n_clusters)
+
+    # TODO: We need to use the clustering algorithm
+
     return clusters

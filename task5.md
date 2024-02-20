@@ -1,6 +1,6 @@
 # 05 Going further
 
-Now that you've built a functioning application, it's time to use the things we've learned. In this final task, we will work on building middlewares for our application. 
+Now that you've built a functioning application, it's time to use what you've learned by yourself. In this final task, we will work on building middlewares for our server-side application. 
 
 ## 05.1 Logging
 

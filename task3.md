@@ -54,7 +54,7 @@ The server, found in `tasks/03/handler`, is built in Python, using another WASI 
 
 We have implemented most of the required functionality, but we're missing the connection to the clustering algorithm.
 
-1. In the `wit/` folder, modify `cluster.wit` so you can call the clustering algorithm of the Rust component.
+1. In the `wit/` folder, modify `clustering.wit` so you can call the clustering algorithm of the Rust component.
 2. Update `app.py` to support the clustering algorithm as well. Hint: We have already defined a function called `run_cluster` that takes the bytes of the request body and parses it as JSON. This is a good place to perform the clustering algorithm.
 3. Build the component.
 

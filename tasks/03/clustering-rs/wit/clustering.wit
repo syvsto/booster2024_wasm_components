@@ -1,5 +1,0 @@
-package clustering:rs;
-
-world clustering {
-  include clustering:common/exports;
-}
