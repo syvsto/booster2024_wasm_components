@@ -80,7 +80,7 @@ We've now set everything up, and can start using our WebAssembly package on the 
 
 4. Import the client-side clustering algorithm bindings by editing the `script.js` file and adding `import { cluster as clusterWasm } from  "clustering-rs";` to the top of the file.
 4. Import the actual client-side WebAssembly by editing the `script.js` file and adding `import init from  "clustering-rs";` to the top of the file. Call the `init` function early on in the Javascript.
-6. Implement a function `cluserClientside` in `script.js`. It should use the imported `clusterWasm` function to cluster our data (hint: We had to slightly change the function signature to conform to the Javascript ABI when compared to our Fermyon endpoint). Call this function instead of `clusterServerside` if there are fewer than 60 generated datapoints.
+6. Implement a function `clusterClientside` in `script.js`. It should use the imported `clusterWasm` function to cluster our data (hint: We had to slightly change the function signature to conform to the Javascript ABI when compared to our Fermyon endpoint). Call this function instead of `clusterServerside` if there are fewer than 60 generated datapoints.
 
 The result should be the same as before, but you will probably notice that the clustering is snappier if the number of datapoints are fewer than 60. This is an interesting usage for WebAssembly: For compute-intensive data processing workloads that have a lot of variation in the size of the work, you can keep the workload client-side until a certain size, above which you offload the work to a beefy server. Examples could include audio and video processing, 3D rendering, and AI model training.
 

@@ -28,7 +28,7 @@ You should now have a completed contract for a component that can print to the t
 
 ### 01.1.2 The Python code
 
-When writing code for a component, there are certain languague-specific conventions you have to follow. For Python, you type in an import that corresponds to the world you use. If you named your world `greeter` in the previous excercise, you would start your file off like this: 
+When writing code for a component, there are certain language-specific conventions you have to follow. For Python, you type in an import that corresponds to the world you use. If you named your world `greeter` in the previous excercise, you would start your file off like this: 
 
 ```python
 import greeter

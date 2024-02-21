@@ -28,7 +28,7 @@ To use imported WIT interfaces in Python, you use something akin to the followin
 
 ```python
 from worldName import imports
-from worldName.import import interfaceName
+from worldName.imports import interfaceName
 ```
 
 This allows you to call the functions declared 

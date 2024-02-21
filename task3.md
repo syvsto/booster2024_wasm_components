@@ -37,7 +37,7 @@ This is the convention when writing WebAssembly components in Rust, similar to h
 Before we can compile this project into a component, we need the WIT file!
 
 1. Create a new directory within `clustering-rs/` called `wit/`, and create a file named `clustering.wit`.
-2. Based on the input type of the `categorize` function and the `world` that is described in the `wit_bindgen::generate!()` clause, write the `clustering.wit` file. Hint: WIT supports composite types, including one named `list`.
+2. Based on the input type of the `run` function and the `world` that is described in the `wit_bindgen::generate!()` clause, write the `clustering.wit` file. Hint: WIT supports composite types, including one named `list`.
 3. Compile the project using the build command `cargo component build --release`. Cargo is Rust's build tool, and the `component` subcommand is used for working with WebAssembly components. Specifying `--release` builds in release mode, causing slower build times but a faster binary.
 4. Since we are using the Rust component as a library, we need to virtualize it in order to avoid the overlapping WASI import instances that we saw in task 2. The compiled component is found within `target/wasm32-wasi/release/`. Virtualize the component.
 
