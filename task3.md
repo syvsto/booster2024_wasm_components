@@ -15,7 +15,7 @@ wit_bindgen::generate!({
     world: "clustering",
 
     exports: {
-        world: Clustering
+        world: "clustering:rs/cluster": Clustering
     }
 })
 ```

@@ -1,4 +1,4 @@
-use crate::exports::clustering::common::clustering::Guest;
+use crate::exports::clustering::rs::cluster::Guest;
 use linfa::traits::{Fit, Predict};
 use linfa::DatasetBase;
 use linfa_clustering::KMeans;
@@ -10,7 +10,7 @@ wit_bindgen::generate!({
     world: "clustering",
 
     exports: {
-        "clustering:common/clustering": Clustering
+        "clustering:rs/cluster": Clustering
     }
 });
 

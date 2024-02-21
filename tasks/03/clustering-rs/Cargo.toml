@@ -22,6 +22,3 @@ package = "clustering:rs"
 [package.metadata.component.target]
 path = "wit/clustering.wit"
 world = "clustering"
-
-[package.metadata.component.target.dependencies]
-"clustering:common" = { path = "wit/deps/common/common.wit" }
