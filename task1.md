@@ -9,12 +9,11 @@ In this task, we will build `greeter` using both Python and Javascript (or Types
 
 ## 01.1 Greeter using Python
 
-We start off by building the Python version of `greeter`. Navigate to the `tasks/01/` directory for the Python version
-of `greeter` (for instance called `greeter-py`), and navigate to it. The folder contains the following files:
+We start off by building the Python version of `greeter`. Navigate to `tasks/01/greeter-py`. The folder contains the following files:
 
 - `app.py`: An empty Python source file that will contain the source code of the component.
 - `greeter.wit`: Every WebAssembly component requires a contract with the outside world in the form of an interface. For
-  the `greeter-py` app, this is contained within `greeter.wit`.
+  the `greeter-py` app, this is contained within `greeter-py.wit`.
 - `deps/` Since we want to run the program locally, we need support for command line interfaces. This is made available
   through the WebAssembly System Interface (WASI). The `deps/` folder contains a minimal set of `.wit` files required to
   build this project with the required WASI files.
@@ -27,7 +26,7 @@ The `greeter.wit` file contains the imports and exports that allow this WebAssem
 Every `.wit` contract needs two things, a `package` declaration (at the top of the file), and the declaration of a
 `world`. 
 
-1. We have provided an basic world for our Python application in `tasks/01/greeter-py/greeter.wit`. Take a look at the file to familiarize yourself with WIT syntax.
+1. We have provided a basic world for our Python application in `tasks/01/greeter-py/greeter-py.wit`. Take a look at the file to familiarize yourself with WIT syntax.
 
 Our end goal with `greeter` is to print a line of text to the screen, which means we need to interface with the world
 outside the WebAssembly runtime. For this, we can use the WebAssembly System Interface (WASI). Did you notice the `deps/` folder within the `greeter-py` folder? It contains interface definitions for the parts of WASI we need. There is nothing special about the WASI `.wit` files, but WebAssembly runtimes that support WASI know to perform specific actions if a component implements things from the WASI interfaces.
@@ -43,15 +42,19 @@ You should now have a completed WIT file for a component that can print to the t
 
 ### 01.1.2 The Python code
 
-When writing code for a component, there are certain languague-specific conventions you have to follow, that often correspond to how you would call foreign functions. For Python, you
-need an import that corresponds to the world you want to use from your WIT file. If you named your world `greeter` in the previous excercise,
-you would start your file off like this:
+When writing code for a component, there are certain languague-specific conventions you have to follow, that often correspond to how you would call foreign functions.
+
+For Python, the mapping from WIT to code has the following shape:
 
 ```python
-import greeter
+from worldname.imports import importname
+
+class InterfaceName:
+    def interfaceFunction(self): # Add parameters according to WIT-specification
+        # implementation
 ```
 
-Then, you must implement the interface specified within the `greeter` world. In Python, you implement worlds and
+Then, you must implement the interface specified within the `greeter-py` world. In Python, you implement worlds and
 interfaces as classes, and any exported functions as methods on that class. The convention used is that interface names
 and method names must match their counterparts in the `.wit` files, but any `kebab-case` identifier in the `.wit` file
 becomes either `camelCase` if it's a function name or `PascalCase` if it's an interface or world.
@@ -78,7 +81,7 @@ function to print to the terminal.
 You can now build the component using:
 
 ```sh
-componentize-py -d . -w greeter componentize app -o greeter.wasm
+componentize-py -d . -w greeter-py componentize app -o greeter-py.wasm
 ```
 
 Let's break this down.
@@ -90,7 +93,7 @@ Let's break this down.
 If you don't get any compilation errors, you can run the `greeter.wasm` component using:
 
 ```sh
-wasmtime -S common greeter.wasm 
+wasmtime -S common greeter-py.wasm 
 ```
 
 `-S` specifies that Wasmtime should run using WASI, with the `common` set of WASI modules. This includes `wasi:cli/run`, which we need to support to print to the screen.
@@ -115,6 +118,19 @@ Using `componentize-js` requires that you provide a build script that specifies 
 ### 01.2.2 The contract
 
 Next up, we need an interface for our component. As with the Python component, the Javascript component is also going to print to the screen. As for the Python project, we have provided the needed WASI interfaces in `deps/`. 
+
+For Javascipt the mapping from WIT to code has the following shape:
+
+```javascript
+import { functionname } from "packagegroup:packagename/interfacename";
+
+export const interfacename = {
+    "interfacefunction": function(){
+        // implementation
+    }
+}
+```
+For each exported interface we export an object of the same name in lowercase containing functions corresponding to the interface's functions.
 
 1. Write the `greeter.wit` file required for the Javascript component. Hint: We want to do exactly the same thing as the Python component. 
 
