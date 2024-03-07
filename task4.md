@@ -44,10 +44,16 @@ The clustering algorithm we built in task 3 seems like it could be useful in cer
 First, we need to add [wasm-bindgen](https://github.com/rustwasm/wasm-bindgen) to our project, which similarly to `wit-bindgen` provides helpers for creating bindings to the generated WebAssembly. This time, we don't create bindings to a WIT file, but instead to Javascript for the browser. Additionally, to conform to the Javascript ABI, we cannot specify functions using nested vectors, and instead need one or more flat lists.
 
 The simplest way to do so is to refactor our clustering method into a standalone function that is conformant to the Javascript ABI and is callable by the `run` method. The new function can be used to build our WASM for the browser.
+The Javascript ABI doesn't allow complex composite types such as nested `Vec`s, so the standalone function needs to have a signature with arguments consisting of flat `Vec`s. These are allowed since they can be mapped to Javascript-native types such as `Float64Array`.
+A simple way to conform to this restriction is to split our `points` argument into two arguments, `points_x` and `points_y`, that store the X and Y axis position of each point in a `Vec` respectively. We can then merge the points for use by our `run` function, for instance using an iterator such as the following example:
 
-1. Change the code to allow building for both the browser and server use cases. This requires a little bit of Rust knowledge, but should be quite possible in a few lines of code. Hint: You cannot use nested vectors or other complex composite types, but are allowed to use anything that has a native Javascript type, such as `Uint8Array`, `Float64Array` and similar. Single vectors are therefore fine.
+```rust
+let points: Vec<Vec<f64>> = points_x.iter().zip(points_y.iter()).map(|(x, y)| vec![*x, *y]).collect();
+```  
 
-`wasm-bindgen` is quite straight-forward to use. You decorate any functions with a procedural macro in the following manner:
+1. Write a wrapper function for `run` that takes the required arguments for `run` in a form that is compliant with the Javascript ABI.
+
+Once we have a wrapper function, `wasm-bindgen` is quite straight-forward to use. You decorate the functions you want to build Javascript bindings for with a procedural macro in the following manner:
 
 ```rust
 #[wasm_bindgen]
@@ -56,7 +62,7 @@ pub fn function_name(arg: u8) -> u8 {
 }
 ```
 
-When the project is built, `wasm-bindgen` will now generate bindings to Javascript and Typescript types for this function.
+When the project is built, `wasm-bindgen` now generate bindings to Javascript and Typescript types for this function.
 
 2. Decorate your wrapper function with `#[wasm_bindgen]`.
 
