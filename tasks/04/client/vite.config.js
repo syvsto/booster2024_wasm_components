@@ -5,7 +5,10 @@ export default defineConfig({
   plugins: [wasm()],
   server: {
     fs: {
-      allow: [searchForWorkspaceRoot(process.cwd())], // This should be expanded with the path to the linked NPM module for task 04.2.1
+      allow: [
+        searchForWorkspaceRoot(process.cwd()),
+        "../03/clustering-rs/pkg/",
+      ],
     },
     proxy: {
       "/cluster": {
