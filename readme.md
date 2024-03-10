@@ -1,6 +1,6 @@
 # WASM Components: Bringing down the tower of Babel
 
-Welcome to the code repository for the Booster workshop on WebAssembly Components. This repository contains the tasks to solve, solutions to the tasks (if you want to cheat), as well as setup instructions, links, and scripts.
+Welcome to the code repository for the Booster workshop on WebAssembly Components. This repository contains the tasks to solve as well as setup instructions, links, and scripts.
 
 --- 
 
@@ -64,6 +64,5 @@ If you want to run everything locally, we have prepared some installation script
 * **[Task 4: Deployment](https://github.com/syvsto/booster2024_wasm_components/blob/master/task4.md)**: Use the Fermyon Spin environment to host your clustering application, and build the clustering library for use in the browser.
 * **[Task 5: Going further](https://github.com/syvsto/booster2024_wasm_components/blob/master/task5.md)**: Make the clustering application support middleware components, and build a logging middleware.
 
-## Solutions
 
-If you want the solutions, you can switch to the `solutions` branch.
+**To get started, head over to [task 1](https://github.com/syvsto/booster2024_wasm_components/blob/master/task1.md)!**
