@@ -1,0 +1,9 @@
+package clustering:rs;
+
+interface cluster {
+    // Implement this interface!
+}
+
+world clustering {
+    // Implement this world, using the `cluster` interface!
+}

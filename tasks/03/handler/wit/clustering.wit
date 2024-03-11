@@ -1,5 +1,0 @@
-package clustering:py;
-
-world clustering {
-    include wasi:http/proxy@0.2.0;
-}
