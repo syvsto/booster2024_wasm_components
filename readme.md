@@ -66,3 +66,30 @@ If you want to run everything locally, we have prepared some installation script
 
 
 **To get started, head over to [task 1](https://github.com/syvsto/booster2024_wasm_components/blob/master/task1.md)!**
+
+## Reference material for WIT syntax
+
+This is the example WIT syntax shown in the presentation:
+
+```wit
+package my:greeter@0.1.0;
+
+interface person {
+  name: string;
+  age: string;
+  variant pronoun {
+    he,
+    she,
+    they
+  }
+}
+
+world my-world {
+   import person;
+   import greeter-configuration;
+   export greet: func() -> string;
+}
+```
+
+We strive to present the required WIT syntax where applicable within the tasks, but you can use this as a quick overview of the main techniques used. If you need a more comprehensive reference, take a look at the [WIT specification](https://github.com/WebAssembly/component-model/blob/main/design/mvp/WIT.md).
+
