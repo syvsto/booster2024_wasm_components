@@ -1,5 +1,0 @@
-package greeter:js;
-
-world greeter {
-    export wasi:cli/run@0.2.0;
-}
