@@ -1,5 +1,7 @@
 package greeter:pypkg;
 
+/// Implement the relevant interface here
+
 world greeter-py {
-    export wasi:cli/run@0.2.0;
+   /// Make sure the interface is can both be an input and an output to the world
 }

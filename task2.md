@@ -1,13 +1,13 @@
 # 02 Component composition
 
 One of the strengths of the component model is that you can compose multiple components together. As long as the output of one component matches the input from another component, the two are able to be composed together, creating a new component with the inputs of the first component and the outputs of the second.
-In this task, we will build on our outputs from task 1 to make a chain of components that in the end print out "Hello from WASM! and Python! and Javascript! and Python!", using both a Python and a Javascript component.
+In this task, we will build on the Javascript and Python `greeter` components to make a chain of components that in the end print out "Hello from WASM! and Python! and Javascript! and Python!", using both a Python and a Javascript component.
 
 Within the `tasks/02` folder, you will find the following:
 
-* `greeter-py/`: The Python implementation of the greeter component from task 1.
-* `greeter-js/`: The Javascript implementation of the greeter component from task 1.
-* `starter.wasm`: A simple component that exports a function saying "Hello from WASM!".
+* `greeter-py/`: A directory containing a Python implementation of the greeter component that is composable.
+* `greeter-js/`: A directory containing a Javascript implementation of the greeter component that is composable.
+* `starter.wasm`: A simple component that exports a function returning the string "Hello from WASM!".
 * `starter.wit`: The WIT file for the `starter.wasm` component.
 * `command.wasm`: A simple component that imports a function returning a string and prints it to the terminal.
 
@@ -36,38 +36,9 @@ We want to specify an interface for our `greeter` component so that we conform t
 
 Hint: We have separated the side effect of printing to the terminal into the pre-defined `command.wasm` component, meaning you don't need the `export wasi:cli/run@0.2.0;` line anymore. However, you will need to both import and export the same interface, so that the component can be composed with itself.
 
-### 02.1.2 Updating the implementations
+We have already implemented the required Python and Javascript code for the components, so if your WIT files are specified correctly you should now be ready to: 
 
-The Python and Javascript source code also needs to be updated to match the changes to the WIT world. Since we now have an `import` in our WIT files, we need to be able to use the imported interface within our implementation. To use imported WIT interfaces in Python, you use something akin to the following:
-
-```python
-from worldName import imports
-from worldName.imports import interfaceName
-```
-
-
-1. Update the Python source so that the interface exported in the WIT file is implementend.
-2. Update the function you just wrote so that it returns a string, which concatenates the result of the function from the interface with the string " and Python!". Hint: String concatenation in python can be done using the `+` operator, so to return the result of a concatenation between a function call and a string, use `return function() + " and String!"`.
-
-Like we discussed in task 1, Javascript interfaces are implemented as an object in the following manner:
-
-```javascript
-export const interfaceName = {
-        fieldName: ...
-}
-```
-
-Imported interfaces are available through:
-
-```javascript
-import { functionName } from "packageName:appName/interfaceName";
-```
-
-3. Change the Javascript component to do the same as the Python component, but returning the current function amended to the string " and Javascript!". You may need to import the interface from the WIT file in the following manner to avoid conflicts between the imported and exported interface: `import { greet as externalGreet } from "greeter:jspkg/greeter";`.
-
-We should now be ready to build the new components:
-
-4. Build both components.
+2. Build both components.
 
 We now (hopefully!) have two components that are composable! However, there is one more step that needs to be done before we can actually compose the components.
 
