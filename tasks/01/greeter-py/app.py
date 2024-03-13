@@ -1,1 +1,5 @@
-# Implement the wasi:cli/run interface here
+import greeter_py
+
+class Run:
+    def run(self):
+        # Implement printing to the screen

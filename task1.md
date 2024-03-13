@@ -22,9 +22,8 @@ We are now ready to begin building!
 
 ### 01.1.1 WebAssembly Interface Types
 
-The `greeter.wit` file contains the imports and exports that allow this WebAssembly component to be used externally.
-Every `.wit` contract needs two things, a `package` declaration (at the top of the file), and the declaration of a
-`world`. 
+The `greeter.wit` file contains the imports and exports for this WebAssembly component.
+Every `.wit` file needs two things, a `package` declaration (at the top of the file), and the declaration of a `world`. 
 
 1. We have provided a basic world for our Python application in `tasks/01/greeter-py/greeter-py.wit`. Take a look at the file to familiarize yourself with WIT syntax.
 
@@ -42,39 +41,23 @@ You should now have a completed WIT file for a component that can print to the t
 
 ### 01.1.2 The Python code
 
-When writing code for a component, there are certain languague-specific conventions you have to follow, that often correspond to how you would call foreign functions.
-
-For Python, the mapping from WIT to code has the following shape:
-
-```python
-from worldname.imports import importname
-
-class InterfaceName:
-    def interfaceFunction(self): # Add parameters according to WIT-specification
-        # implementation
-```
-
-Then, you must implement the interface specified within the `greeter-py` world. In Python, you implement worlds and
+Then, you must implement the interface specified within the `greeter-py` world in Python. In Python, you implement worlds and
 interfaces as classes, and any exported functions as methods on that class. The convention used is that interface names
 and method names must match their counterparts in the `.wit` files, but any `kebab-case` identifier in the `.wit` file
 becomes either `camelCase` if it's a function name or `PascalCase` if it's an interface or world.
 
-For example, if you have an interface named `foo` that contains a function named `bar`, the python code would look like this:
+For example, if you have an interface named `run` that contains a function named `run` (like we do), the python code would look like this:
 
 ```python
-class Foo:
-    def bar(self):
-       ...
+class Run:
+    def run(self): # Add parameters according to WIT-specification
+        # implementation
 ```
 
-Let us now implement the WASI `run` interface we need to turn our component into a CLI application.
-Remember the structure of the `run.wit` file from task 01.1.1? This is the interface we need to implement. Reminder: The `deps/` folder
-contains the interface for the run function within the `run.wit` function. 
-
-If you've implemented the interface correctly, the WebAssembly runtime will use the `run` function similarly to a `main` function in langauges like Java or C++, and you are able to use the Python `print()`
+Since the the interface has been implemented correctly, the WebAssembly runtime will use the `run` function similarly to a `main` function in langauges like Java or C++, and you are able to use the Python `print()`
 function to print to the terminal.
 
-1. Implement the `run()` function from the `run` interface so that it prints "Hello from Python!".
+1. Add functionality to `app.py` so the `run()` method from the `run` interface prints "Hello from Python!".
 
 ### 01.1.3 Running the component
 
@@ -90,7 +73,7 @@ Let's break this down.
  * `componentize app` specifies that we want to build `app.py` into a component.
  * `-o` sets the output file name of the component we want to build.
 
-If you don't get any compilation errors, you can run the `greeter.wasm` component using:
+If you don't get any compilation errors, you can run the `greeter-py.wasm` component that was just produced using:
 
 ```sh
 wasmtime -S common greeter-py.wasm 
@@ -119,19 +102,6 @@ Using `componentize-js` requires that you provide a build script that specifies 
 
 Next up, we need an interface for our component. As with the Python component, the Javascript component is also going to print to the screen. As for the Python project, we have provided the needed WASI interfaces in `deps/`. 
 
-For Javascipt the mapping from WIT to code has the following shape:
-
-```javascript
-import { functionname } from "packagegroup:packagename/interfacename";
-
-export const interfacename = {
-    "interfacefunction": function(){
-        // implementation
-    }
-}
-```
-For each exported interface we export an object of the same name in lowercase containing functions corresponding to the interface's functions.
-
 1. Write the `greeter.wit` file required for the Javascript component. Hint: We want to do exactly the same thing as the Python component. 
 
 ## 01.2.3 The implementation
@@ -141,12 +111,17 @@ We can now write the required implementation. The convention in Javascript is th
 For example:
 
 ```javascript
-export const foo = {
-  bar: function() { ... }
-};
+// If you have imports in the .wit file, you use this form.
+import { functionname } from "packagegroup:packagename/interfacename";
+
+export const interfacename = {
+    "interfacefunction": function(){
+        // implementation
+    }
+}
 ```
 
-2. Write the necessary Javascript within the `app.js` file.
+2. Write the necessary Javascript to print "Hello from Javascript" within the `app.js` file. Hint: To print to the terminal in Javascript, you use the function `console.log()`. Hint 2: We still want to implement the `run` interface, which has a `run` method.
 
 ## 01.2.3 Building and running
 
@@ -154,8 +129,8 @@ We are now ready to build and run the Javascript application!
 
 1. Run `node build.mjs`. This uses `node` to run the Javascript build script locally. 
 
-If everything builds correctly, you should have a `greeter.wasm` file.
+If everything builds correctly, you should have a `greeter-js.wasm` file.
 
-2. Run the `greeter.wasm` file using Wasmtime. Remember to enable the WASI capabilities of Wasmtime using the `-S common` flag!
+2. Run the `greeter-js.wasm` file using Wasmtime. Remember to enable the WASI capabilities of Wasmtime using the `-S common` flag!
 
 [Onward!](https://github.com/syvsto/booster2024_wasm_components/blob/master/task2.md)
