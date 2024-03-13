@@ -36,7 +36,7 @@ This is the convention when writing WebAssembly components in Rust, similar to h
 
 Before we can compile this project into a component, we need the WIT file! Within `tasks/04/clustering-rs/wit` we have provided the skeleton of the WIT file in `clustering.wit`.
 
-1. Based on the input type of the `run` function and the `world` that is described in the `wit_bindgen::generate!()` clause, write the `clustering.wit` file. Hint: WIT supports composite types, including one named `list`.
+1. Based on the input type of the `run` function and the `world` that is described in the `wit_bindgen::generate!()` clause, write the `clustering.wit` file. Hint: WIT supports composite types, including one named `list`, and various numeric types such as `f64` and `u32`.
 2. Compile the project using the build command `cargo component build --release`. Cargo is Rust's build tool, and the `component` subcommand is used for working with WebAssembly components. Specifying `--release` builds in release mode, causing slower build times but a faster binary.
 3. Since we are using the Rust component as a library, we need to virtualize it in order to avoid the overlapping WASI import instances that we saw in task 2. The compiled component is found within `target/wasm32-wasi/release/`. Virtualize the component using `wasi-virt`.
 
@@ -53,15 +53,15 @@ The purpose of the handler component is to read JSON specifying the points to cl
 }
 ```
 
-We have implemented most of the required functionality, but we're missing the connection to the clustering algorithm.
+We have implemented most of the required functionality and have implemented the WIT file required (take a peek if you're struggling with task 03.1!), but we're missing the connection to the clustering algorithm.
 
-1. Modify `clustering.wit` so you can call the clustering algorithm of the Rust component.
-
-2. Update `app.py` to support the clustering algorithm as well. Hint: We have already defined a function called `run_cluster` that takes the bytes of the request body and parses it as JSON. This is a good place to perform the clustering algorithm.
+1. Update `app.py` to support the clustering algorithm. We have already defined a function called `run_cluster` that takes the bytes of the request body and parses it as JSON. This is a good place to perform the clustering algorithm.
 
 Hint: The Python syntax for getting an element from a dictionary is `dictionary['key']`. 
 
-3. Build the component.
+Hint 2: Remember to update the imports so you can use the imported clustering interface within the implementation!
+
+2. Build the component.
 
 ## 03.3 Composition
 
@@ -72,10 +72,10 @@ Now that we have two components that should be compatible, we need to compose th
 In order to try the application, you can run it in wasmtime using:
 
 ```bash
-wasmtime serve --wasi common composed-application.wasm
+wasmtime serve --wasi common composed.wasm ; Note the `serve` command, which starts `wasmtime` in server mode.
 ```
 
-Where `composed-application.wasm` is the name of your composed component.
+Where `composed.wasm` is the name of your composed component.
 
 If the server runs successfully, you can try the endpoint using CURL or any other HTTP client. Here's an example CURL request:
 

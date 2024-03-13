@@ -70,6 +70,6 @@ def run_cluster(data: bytes) -> str:
     json_str = data.decode('utf-8')
     json_data = json.loads(json_str)
 
-    # TODO: We need to use the clustering algorithm
+    # TODO: We need to use the clustering algorithm, and assign it to a variable called `clusters`
 
     return clusters
